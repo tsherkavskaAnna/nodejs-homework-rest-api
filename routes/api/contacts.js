@@ -28,7 +28,13 @@ router.get("/:contactId", async(req, res, next) => {
     if(!result) {
       throw RequestError(404, "Not found")
     }
-    res.json(result)
+    res.json({
+      status: 'success',
+      code: 200,
+      data: {
+        result,
+      },
+    });
   } catch (error) {
     next(error)
   }
@@ -41,7 +47,13 @@ router.post('/', async (req, res, next) => {
       throw RequestError(400, "missing required name field");
     }
     const result = await addContact(req.body)
-    res.status(201).json(result);
+    res.json({
+      status: 'success',
+      code: 200,
+      data: {
+        result,
+      },
+    });
   } catch (error) {
     next(error)
   }
@@ -54,7 +66,11 @@ router.delete('/:contactId', async (req, res, next) => {
     if(!result) {
       throw RequestError(404, "Not found")
     }
-    res.json({ "message": "contact deleted"})
+    res.json({
+      status: 'success',
+      code: 200,
+      message: "contact deleted"
+    });
   } catch (error) {
     next(error)
   }
@@ -71,7 +87,15 @@ router.put('/:contactId', async (req, res, next) => {
     if (!result) {
       throw RequestError(404, "Not found")
     }
-    res.json(result, {"message": 'contact updated'});
+    res.json({
+      status: 'success',
+      code: 200,
+      message: "contact updated",
+      data: {
+        result,
+      },
+    });
+    
   } catch (error) {
     next(error)
   }
