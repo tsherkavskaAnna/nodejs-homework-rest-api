@@ -12,6 +12,7 @@ const addContact = async (req, res, next) => {
     res.json({
       status: 'success',
       code: 201,
+      message: "contact created",
       data: { result },
     })
   } catch (error) {
