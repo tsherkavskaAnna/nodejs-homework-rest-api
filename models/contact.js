@@ -1,6 +1,7 @@
 const {Schema, model, SchemaTypes} = require("mongoose");
 const Joi = require("joi");
 
+
 const contactsSchema = new Schema({
         name: {
           type: String,
@@ -23,6 +24,7 @@ const contactsSchema = new Schema({
 }, 
  {versionKey: false, timestamps: true}
 );
+
 
 const addSchema = Joi.object({
   name: Joi.string().required(),

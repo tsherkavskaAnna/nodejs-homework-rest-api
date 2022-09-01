@@ -8,21 +8,35 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: [true, 'Set password for user'],
+        minlength: 6,
       },
       email: {
         type: String,
         required: [true, 'Email is required'],
         unique: true,
+        match: emailRegexp,
       },
       subscription: {
         type: String,
         enum: ["starter", "pro", "business"],
         default: "starter"
       },
-      token: String
+      token: {
+        type: String,
+        default: "",
+      }
+      
 }, {versionKey: false, timestamps: true});
 
-userSchema.methods.validatePassword = function (password) {
+userSchema.pre("save", async function(next){
+  if (this.isModified("password")) {
+    const salt = await bcrypt.genSalt(6);
+    this.password = await bcrypt.hash(this.password, salt)
+  }
+  next();
+})
+
+userSchema.methods.validPassword = function (password) {
   return bcrypt.compare(password, this.password)
 }
 

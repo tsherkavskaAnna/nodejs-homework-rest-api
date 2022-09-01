@@ -21,6 +21,7 @@ const register = async(req, res, next) => {
         code: 201,
         user:{
             email: result.email,
+            password,
         }
         
     })
