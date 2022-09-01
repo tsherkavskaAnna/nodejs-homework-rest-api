@@ -24,22 +24,25 @@ const userSchema = new Schema({
       token: {
         type: String,
         default: "",
+      },
+      owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
       }
       
 }, {versionKey: false, timestamps: true});
 
-userSchema.pre("save", async function(next){
-  if (this.isModified("password")) {
-    const salt = await bcrypt.genSalt(6);
-    this.password = await bcrypt.hash(this.password, salt)
-  }
-  next();
-})
+// userSchema.pre("save", async function(next){
+//   if (this.isModified("password")) {
+//     const salt = await bcrypt.genSalt(6);
+//     this.password = await bcrypt.hash(this.password, salt)
+//   }
+//   next();
+// })
 
-userSchema.methods.validPassword = function (password) {
+userSchema.methods.comparePassword = function (password) {
   return bcrypt.compare(password, this.password)
-}
-
+};
 
 const User = model("user", userSchema);
 
