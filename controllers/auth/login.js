@@ -6,6 +6,7 @@ const { User } = require("../../models/user");
 const login = async(req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
+  console.log(user);
   if(!user) {
     throw RequestError(401, "Email is wrong")
   }
@@ -23,6 +24,7 @@ const login = async(req, res) => {
    token,
     user: {
       email,
+      subscription: user.subscription,
     }
   })
 }

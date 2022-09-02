@@ -7,7 +7,7 @@ const {ctrlWrapper} = require("../../helpers");
 
 const router = express.Router()
 
-router.get("/", ctrlWrapper(ctrl.listContacts));
+router.get("/",authorization, ctrlWrapper(ctrl.listContacts));
 
 router.get("/:contactId", isValidId, ctrlWrapper(ctrl.getContactById));
 

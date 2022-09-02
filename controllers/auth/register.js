@@ -5,6 +5,7 @@ const {User} = require("../../models/user");
 const register = async(req, res, next) => {
   const { email, password, subscription } = req.body;
   const user = await User.findOne({ email });
+  
    if(user) {
     return res.status(409).json({
         status: "error",
@@ -21,7 +22,7 @@ const register = async(req, res, next) => {
         code: 201,
         user:{
             email: result.email,
-            password,
+            subscription: result.subscription,
         }
         
     })

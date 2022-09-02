@@ -25,20 +25,10 @@ const userSchema = new Schema({
         type: String,
         default: "",
       },
-      owner: {
-        type: Schema.Types.ObjectId,
-        ref: 'user',
-      }
+      
       
 }, {versionKey: false, timestamps: true});
 
-// userSchema.pre("save", async function(next){
-//   if (this.isModified("password")) {
-//     const salt = await bcrypt.genSalt(6);
-//     this.password = await bcrypt.hash(this.password, salt)
-//   }
-//   next();
-// })
 
 userSchema.methods.comparePassword = function (password) {
   return bcrypt.compare(password, this.password)
@@ -56,11 +46,15 @@ const registerSchema = Joi.object({
 const loginSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
-})
+});
 
+const subscriptionSchema = Joi.object({
+  subscription: Joi.string().label("Subscription Type").valid("starter", "pro", "business").required(),
+})
 const schemas = {
     registerSchema,
     loginSchema,
+    subscriptionSchema,
 }
 
 module.exports = {
