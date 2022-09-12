@@ -5,18 +5,16 @@ const {RequestError, sendEmail} = require("../../helpers");
 const resendEmailValidation = async(req, res) => {
     const {email} = req.body;
     const user = await User.findOne({email});
-    const { verificationToken, verify } = user;
-console.log(user);
     if(!user) {
         throw RequestError(400, "Missing required field email")
     }
-    if(verify) {
+    if(user.verify) {
         throw RequestError(400, "Verification has already been passed")
     }
 const mail = {
     to: email,
-    subject: "Site registration confirmation",
-    html: `<a href="http://localhost:3000/api/users/verify/${verificationToken}" target="_blanc">Click confirm email</a>`
+    subject: "registration confirm",
+    html: `<a href="http://localhost:3000/api/users/verify/${user.verificationToken}" target="_blanc">Click confirm email</a>`
 }
 await sendEmail(mail);
 res.json({

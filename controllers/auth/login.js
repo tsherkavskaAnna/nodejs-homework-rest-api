@@ -16,10 +16,10 @@ const login = async(req, res) => {
     throw RequestError(401, "Password is wrong")
   }
 
-  // if(!user.verify) {
-  //   throw RequestError(400, "Email is not verify")
-  // }
-  console.log(user);
+  if(!user.verify) {
+    throw RequestError(400, "Email is not verify")
+  }
+  
   const payload = {
     id: user._id
   };
@@ -33,6 +33,7 @@ const login = async(req, res) => {
       email,
       subscription: user.subscription,
       verify: user.verify,
+      verifyToken: user.verificationToken,
     }
   })
 }
