@@ -18,6 +18,8 @@ const mail = {
 }
 await sendEmail(mail);
 res.json({
+    status: "success",
+    code: 200,
     message: "Verification email sent"
 })
 }

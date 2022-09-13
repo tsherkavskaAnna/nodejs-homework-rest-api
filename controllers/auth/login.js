@@ -30,10 +30,9 @@ const login = async(req, res) => {
    code: 200,
    token,
     user: {
-      email,
+      email: user.email,
       subscription: user.subscription,
       verify: user.verify,
-      verifyToken: user.verificationToken,
     }
   })
 }

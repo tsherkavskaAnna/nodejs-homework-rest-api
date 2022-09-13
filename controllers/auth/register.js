@@ -29,11 +29,12 @@ const register = async(req, res, next) => {
     };
     
     await sendEmail(mail);
+
     res.status(201).json({
         status: "success",
         code: 201,
         user:{
-            email: result.email,
+            email,
             subscription: result.subscription,
             verificationToken,
             avatarURL,
